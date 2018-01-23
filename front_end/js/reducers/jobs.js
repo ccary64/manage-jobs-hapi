@@ -29,15 +29,10 @@ export default (state = {}, action = {}) => {
     case LOCK_QUEUE_REQUEST:
     case REMOVE_JOB_REQUEST:
     case REMOVE_JOB_SUCCESS:
-      return {
-        ...state,
-        fetching: true
-      };
     case FETCH_JOB_BY_ID_REQUEST:
       return {
         ...state,
-        currentJob: {},
-        fetching: true
+        fetching: type
       };
     case REMOVE_JOB_FAILURE:
     case FETCH_JOBS_FAILURE:

@@ -27,8 +27,7 @@ class JobCard extends React.Component {
   }
 
   render() {
-    const { job } = this.props;
-    const { jobId, status, name, lastTask, startTime, endTime } = job;
+    const { jobId, status, name, lastTask, startTime, endTime } = this.props.job || {};
     const currentTime = (status === RUNNING) ? new Date() : endTime;
     return (
       <Card style={{width: '30vw', marginTop: '10px'}}>
@@ -52,6 +51,9 @@ class JobCard extends React.Component {
   }
 };
 
-const mapStateToProps = (state/*, props*/) => ({ });
+const mapStateToProps = (state/*, props*/) => {
+  console.log(state);
+  return {};
+ };
 const ConnectedJobCard = connect(mapStateToProps)(JobCard);
 export default ConnectedJobCard;
