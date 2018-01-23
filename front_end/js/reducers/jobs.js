@@ -13,6 +13,9 @@ import {
   REMOVE_JOB_REQUEST,
   REMOVE_JOB_SUCCESS,
   REMOVE_JOB_FAILURE,
+  RERUN_JOB_REQUEST,
+  RERUN_JOB_SUCCESS,
+  RERUN_JOB_FAILURE,
   LOCK_QUEUE_REQUEST,
   LOCK_QUEUE_SUCCESS,
   LOCK_QUEUE_FAILURE,
@@ -29,7 +32,7 @@ export default (state = {}, action = {}) => {
     case CREATE_JOB_REQUEST:
     case LOCK_QUEUE_REQUEST:
     case REMOVE_JOB_REQUEST:
-    case REMOVE_JOB_SUCCESS:
+    case RERUN_JOB_REQUEST:
       return {
         ...state,
         fetching: type
@@ -46,6 +49,11 @@ export default (state = {}, action = {}) => {
     case CREATE_JOB_FAILURE:
     case LOCK_QUEUE_FAILURE:
     case REMOVE_JOB_FAILURE:
+    case RERUN_JOB_FAILURE:
+    case REMOVE_JOB_SUCCESS:
+    case RERUN_JOB_SUCCESS:
+    case CREATE_JOB_SUCCESS:
+    case LOCK_QUEUE_SUCCESS:
       return {
         ...state,
         fetching: false
@@ -54,7 +62,7 @@ export default (state = {}, action = {}) => {
       return {
         ...state,
         list: payload.jobs || [],
-        locked: payload.locked || state.locked || false,
+        locked: payload.locked || false,
         fetching: false
       };
     case FETCH_JOB_BY_ID_SUCCESS:
@@ -64,23 +72,11 @@ export default (state = {}, action = {}) => {
         currentJob: Object.assign(currentJob, { builds: payload.details || [] }),
         fetching: false
       };
-    case CREATE_JOB_SUCCESS:
-      return {
-        ...state,
-        list: [ payload.job, ...list ],
-        fetching: false
-      };
-    case LOCK_QUEUE_SUCCESS:
-      return {
-        ...state,
-        locked: payload.locked || false,
-        fetching: false
-      };
     case SET_SELECTED_JOBS:
       return {
         ...state,
         selected: payload.selected || 'all'
-      }
+      };
     default:
       return state;
   }

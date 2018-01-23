@@ -23,6 +23,7 @@ class BaseRouter {
       baseApi: '/api',
       jobs: '/api/jobs',
       jobById: '/api/jobs/{jobId}',
+      jobByIdRerun: '/api/jobs/{jobId}/rerun',
       jobsLock: '/api/jobs/lock',
       baseStatic: '/public/{path*}',
       public: '/public',

@@ -12,13 +12,19 @@ const {
   RUNNING,
   CARD_ACTION_RERUN,
   CARD_ACTION_LOGS,
-  CARD_ACTION_CONFIGS
+  CARD_ACTION_REMOVE
 } = constants;
 
 class JobCard extends React.Component {
   constructor(props) {
     super(props);
     this.handleRemove = this.handleRemove.bind(this);
+    this.handleRerun = this.handleRerun.bind(this);
+  }
+
+  handleRerun() {
+    const { jobId } = this.props.job || {};
+    this.props.dispatch(jobActions.rerun(jobId));
   }
 
   handleRemove() {
@@ -42,9 +48,9 @@ class JobCard extends React.Component {
         <CardTitle subtitle="Elapsed Time" />
         <CardText>{moment(currentTime).diff(startTime, 'seconds')}</CardText>
         <CardActions>
-          <Button label={CARD_ACTION_RERUN} raised primary />
-          <Button label={'Remove'} onClick={this.handleRemove} raised />
-          <Link to={`/${jobId}`}><Button label={CARD_ACTION_LOGS} raised /></Link>
+          <Button label={CARD_ACTION_RERUN} onClick={this.handleRerun} raised primary />
+          <Button label={CARD_ACTION_REMOVE} onClick={this.handleRemove} raised accent />
+          <Link to={`/${jobId}`}><Button icon='info_outline' label={CARD_ACTION_LOGS} raised /></Link>
         </CardActions>
       </Card>
     );

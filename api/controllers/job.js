@@ -46,6 +46,21 @@ exports.create = async (req, h) => {
   }
 }
 
+/**
+ * GET Rerun a job
+ */
+exports.rerun = async (req, h) => {
+  const { jobId } = req.params;
+  try {
+    await jobQueries.stopJob(jobId);
+    await jobQueries.createStatus({ jobId, startTime: new Date() });
+    return { status: true };
+  } catch (err) {
+    console.log(err);
+    return { status: false };
+  }
+}
+
 exports.lock = async (req, h) => {
   const { locked } = req.payload;
   global.queueLock = locked;
@@ -73,6 +88,11 @@ exports.update = async (req, h) => {
 
 exports.remove = async (req, h) => {
   const { jobId } = req.params;
-  await jobQueries.remove(jobId);
-  return { status: true, jobId };
+  try {
+    await jobQueries.remove(jobId);
+    return { status: true };
+  } catch (err) {
+    console.log(err);
+    return { status: false };
+  }
 }

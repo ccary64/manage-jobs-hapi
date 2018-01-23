@@ -46,7 +46,12 @@ class LockQueue extends React.Component {
     const { active } = this.state;
     const { locked = false } = this.props;
     return (
-      <Button label={(locked) ? 'Unlock Queue' : 'Lock Queue'} onClick={this.handleButtonPress} raised primary={locked}>
+      <Button
+        icon={(locked) ? 'lock_open' : 'lock_outline'}
+        label={(locked) ? 'Unlock Queue' : 'Lock Queue'}
+        onClick={this.handleButtonPress}
+        raised
+        accent={locked}>
         <Dialog
           active={active} 
           title='Are you sure you want to Lock Queue'
