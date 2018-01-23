@@ -17,20 +17,24 @@ module.exports = class JobChecker {
       const jobs = await jobQueries.getAllByStatusType('running') || [];
       const currentTime = new Date();
       const luckyNumber = Math.floor(Math.random() * MAX_TIME) + 1;
+      const unluckyNumber = Math.floor(Math.random() * MAX_TIME) + 1;
 
-      const endingJobs = jobs.filter(item => {
+      const taskedJobs = jobs.map(async item => {
         const elapsedTime = moment(currentTime).diff(item.startTime, 'seconds');
-        if (elapsedTime > MAX_TIME || elapsedTime === luckyNumber) {
-          return true;
+        if (elapsedTime === unluckyNumber) {
+          return jobQueries.updateBuildStatus(item.id, 'error');
         }
+        return jobQueries.updateTask(item.id, `random task ${elapsedTime}`);
       });
 
-      if (!endingJobs.length) {
-        return;
-      }
+      const endingBuildIds = jobs.filter(item => {
+        const elapsedTime = moment(currentTime).diff(item.startTime, 'seconds');
+        return (elapsedTime > MAX_TIME || elapsedTime === luckyNumber);
+      }).map(item => item.id);
+
+      const queryPromises = (endingBuildIds.length) ? [...taskedJobs, jobQueries.batchEndJobs(endingBuildIds, currentTime)] : taskedJobs;
       
-      const jobIds = endingJobs.map(item => item.jobId);
-      await jobQueries.batchEndJobs(jobIds, currentTime);
+      await Promise.all(queryPromises);
     }, 1000);
   }
 }
