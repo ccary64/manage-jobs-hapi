@@ -63,10 +63,10 @@ function createStatus(jobStatus) {
   .returning('*');
 }
 
-function batchEndJobs(jobIds, currentTime) {
+function batchEndJobs(buildIds, currentTime) {
   return knex('jobs_status')
     .where({status: 'running'})
-    .whereIn('job_id', jobIds)
+    .whereIn('id', buildIds)
     .update({'end_time': currentTime, status: 'complete', 'last_task': 'finnished' });
 }
 
@@ -83,6 +83,18 @@ function remove(jobId) {
   .where({ id: parseInt(jobId, /* radix */ 10) });
 }
 
+function updateTask(buildId, task) {
+  return knex('jobs_status')
+    .update({ 'last_task': task })
+    .where({ id: parseInt(buildId, /* radix */ 10), status: 'running' });
+}
+
+function updateBuildStatus(buildId, status) {
+  return knex('jobs_status')
+    .update({ status, 'end_time': new Date() })
+    .where({ id: parseInt(buildId, /* radix */ 10), status: 'running' });
+}
+
 module.exports = {
   getAllByUserId,
   getAllCurrentByUserId,
@@ -93,6 +105,8 @@ module.exports = {
   createStatus,
   batchEndJobs,
   updateJob,
+  updateBuildStatus,
   remove,
-  stopJob
+  stopJob,
+  updateTask
 };
