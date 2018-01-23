@@ -1,1 +1,4 @@
 node_modules/
+
+front_end/public/app.bundle.js
+front_end/public/app.bundle.js.map
