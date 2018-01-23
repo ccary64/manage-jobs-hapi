@@ -5,6 +5,7 @@ import {
   FETCH_JOB_BY_ID,
   CREATE_JOB,
   REMOVE_JOB,
+  RERUN_JOB,
   SET_SELECTED_JOBS,
   LOCK_QUEUE
 } from './actionTypes';
@@ -55,6 +56,13 @@ export const remove = (jobId) => {
   return {
     types: REMOVE_JOB,
     api: { url: `/jobs/${jobId}`, params: DELETE_PARAMS }
+  }
+}
+
+export const rerun = (jobId) => {
+  return {
+    types: RERUN_JOB,
+    api: { url: `/jobs/${jobId}/rerun` }
   }
 }
 

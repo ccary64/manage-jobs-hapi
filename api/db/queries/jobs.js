@@ -19,16 +19,22 @@ function getAllCurrentByUserId(id) {
   .orderBy('jobs_status.id', 'desc');
 }
 
+function stopJob(jobId) {
+  return knex('jobs_status')
+    .where({'job_id': jobId, status: 'running'})
+    .update({'end_time': new Date(), status: 'stopped', 'last_task': 'random task' });
+}
+
 function getCurrentById(jobId) {
   return knex('jobs')
   .distinct(knex.raw(`ON (jobs_status.job_id) "jobs_status"."job_id" as "jobId",
     "jobs_status"."id" as "statusId", "jobs_status"."status" as "status", "name",
     "jobs_status"."last_task" as "lastTask", "jobs_status"."start_time" as "startTime",
     "jobs_status"."end_time" as "endTime"`))
-    .where({ 'jobs.id': parseInt(jobId, /* radix */ 10) })
-    .innerJoin('jobs_status', 'jobs.id', 'jobs_status.job_id')
-    .orderBy('jobs_status.job_id', 'desc')
-    .orderBy('jobs_status.id', 'desc');
+  .where({ 'jobs.id': parseInt(jobId, /* radix */ 10) })
+  .innerJoin('jobs_status', 'jobs.id', 'jobs_status.job_id')
+  .orderBy('jobs_status.job_id', 'desc')
+  .orderBy('jobs_status.id', 'desc');
 }
 
 function getAllByStatusType(statusType) {
@@ -59,6 +65,7 @@ function createStatus(jobStatus) {
 
 function batchEndJobs(jobIds, currentTime) {
   return knex('jobs_status')
+    .where({status: 'running'})
     .whereIn('job_id', jobIds)
     .update({'end_time': currentTime, status: 'complete', 'last_task': 'finnished' });
 }
@@ -86,5 +93,6 @@ module.exports = {
   createStatus,
   batchEndJobs,
   updateJob,
-  remove
+  remove,
+  stopJob
 };

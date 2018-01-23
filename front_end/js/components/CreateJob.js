@@ -51,7 +51,7 @@ class CreateJob extends React.Component {
     const { locked } = this.props;
     const { active, nameError } = this.state;
     return (
-      <Button label={'New Job'} onClick={this.handleToggle} raised disabled={locked}>
+      <Button icon='library_add' label={'New Job'} onClick={this.handleToggle} accent raised disabled={locked}>
         <Dialog
           active={active} 
           title='Create New Job'
