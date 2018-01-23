@@ -51,9 +51,6 @@ class JobCard extends React.Component {
   }
 };
 
-const mapStateToProps = (state/*, props*/) => {
-  console.log(state);
-  return {};
- };
+const mapStateToProps = (state/*, props*/) => ({});
 const ConnectedJobCard = connect(mapStateToProps)(JobCard);
 export default ConnectedJobCard;

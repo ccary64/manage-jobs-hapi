@@ -17,22 +17,28 @@ import {
   LOCK_QUEUE_SUCCESS,
   LOCK_QUEUE_FAILURE,
   SET_SELECTED_JOBS
-} from '../actions/actionTypes'; 
+} from '../actions/actionTypes';
 
 export default (state = {}, action = {}) => {
   const { payload = {}, type } = action;
   const { list = [] } = state;
+  const getJobById = (jobId) => list.filter(item => item.jobId === jobId);
+
   switch (type) {
     case FETCH_JOBS_REQUEST:
-    case FETCH_JOB_BY_ID_REQUEST:
     case CREATE_JOB_REQUEST:
     case LOCK_QUEUE_REQUEST:
     case REMOVE_JOB_REQUEST:
     case REMOVE_JOB_SUCCESS:
-    case FETCH_JOB_BY_ID_REQUEST:
       return {
         ...state,
         fetching: type
+      };
+    case FETCH_JOB_BY_ID_REQUEST:
+      return {
+        ...state,
+        fetching: type,
+        currentJob: {}
       };
     case REMOVE_JOB_FAILURE:
     case FETCH_JOBS_FAILURE:
@@ -52,12 +58,10 @@ export default (state = {}, action = {}) => {
         fetching: false
       };
     case FETCH_JOB_BY_ID_SUCCESS:
+      const [currentJob] = getJobById(parseInt(payload.jobId, /* radix */ 10));
       return {
         ...state,
-        currentJob: {
-          id: parseInt(paylaod.jobId, /* radix */ 10),
-          builds: payload.details || []
-        },
+        currentJob: Object.assign(currentJob, { builds: payload.details || [] }),
         fetching: false
       };
     case CREATE_JOB_SUCCESS:

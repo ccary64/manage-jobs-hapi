@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux'
+import { CREATE_JOB_REQUEST } from '../actions/actionTypes';
 import * as jobActions from '../actions/jobs';
 import * as constants from '../constants';
 import moment from 'moment';
@@ -15,11 +16,11 @@ class JobDetails extends React.Component {
   }
 
   render() {
-    const { details = [] , name } = this.props;
+    const { builds = [], name } = this.props;
     return (
       <List selectable>
         <ListSubHeader caption={name} />
-        {details.map(item => {
+        {builds.map(item => {
           return (
             <ListItem 
               avatar={STATUS_ICONS[item.status]}
