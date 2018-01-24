@@ -22,16 +22,17 @@ class JobDetails extends React.Component {
     return setInterval(() => this.props.dispatch(jobActions.fetchById(jobId)), 1000);
   }
 
-  sortBuilds(build) {
-    return build.slice().sort((a, b) => a.id > b.id);
+  shouldComponentUpdate(nextProps) {
+    console.log(nextProps);
+    return true;
   }
 
   render() {
-    const { builds = [], name } = this.props.currentJob;
+    const { name } = this.props.currentJob;
     return (
       <List selectable>
         <ListSubHeader caption={name} />
-        {builds.map(item => {
+        {this.props.currentBuilds.map(item => {
           return (
             <ListItem 
               avatar={STATUS_ICONS[item.status]}
@@ -47,8 +48,10 @@ class JobDetails extends React.Component {
 }
 
 const mapStateToProps = (state/*, props*/) => {
+  console.log('state', state.jobs.currentBuilds);
   return {
     currentJob: state.jobs.currentJob || {},
+    currentBuilds: state.jobs.currentBuilds || [],
     currentUpdater: state.jobs.currentUpdater
   };
 }

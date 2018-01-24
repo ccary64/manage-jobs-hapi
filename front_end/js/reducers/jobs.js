@@ -27,6 +27,7 @@ export default (state = {}, action = {}) => {
   const { payload = {}, type } = action;
   const { list = [] } = state;
   const getJobById = (jobId) => list.filter(item => item.jobId === jobId);
+  const getSortedBuilds = (build) => build.slice().sort((a,b) => a.statusId < b.statusId);
 
   switch (type) {
     case FETCH_JOBS_REQUEST:
@@ -63,9 +64,11 @@ export default (state = {}, action = {}) => {
       };
     case FETCH_JOB_BY_ID_SUCCESS:
       const [currentJob] = getJobById(parseInt(payload.jobId, /* radix */ 10));
+      const currentBuilds = getSortedBuilds(payload.details || []);
       return {
         ...state,
-        currentJob: Object.assign(currentJob, { builds: payload.details || [] }),
+        currentJob,
+        currentBuilds,
         fetching: false
       };
     case SET_SELECTED_JOBS:
