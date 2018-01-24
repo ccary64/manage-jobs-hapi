@@ -4,6 +4,7 @@ import { render } from 'react-dom';
 import { Provider } from 'react-redux'
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import * as jobActions from './actions/jobs';
+import Worker from './worker';
 import createStore from './store'
 import CardContainer from './components/CardContainer';
 import TopBar from './components/TopBar';
@@ -17,11 +18,7 @@ const cards = {
 }
 
 const store = createStore({ jobs: {}});
-store.dispatch(jobActions.fetchAll());
-
-setInterval(async () => {
-  store.dispatch(jobActions.fetchAll());
-}, 1000);
+//store.dispatch(jobActions.fetchAll());
 
 render (
   <Provider store={store}>
@@ -29,7 +26,7 @@ render (
       <Switch>
         <TopBar>
           <Route exact path='/' component={CardContainer}/>
-          <Route path='/:jobId' component={JobDetails}/>
+          <Route path='/job/:jobId' component={JobDetails}/>
         </TopBar>
       </Switch>
     </BrowserRouter>

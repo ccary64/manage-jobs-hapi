@@ -19,7 +19,9 @@ import {
   LOCK_QUEUE_REQUEST,
   LOCK_QUEUE_SUCCESS,
   LOCK_QUEUE_FAILURE,
-  SET_SELECTED_JOBS
+  SET_SELECTED_JOBS,
+  SET_UPDATE_BUILDS,
+  SET_UPDATE_JOBS
 } from '../actions/actionTypes';
 
 export default (state = {}, action = {}) => {
@@ -33,15 +35,10 @@ export default (state = {}, action = {}) => {
     case LOCK_QUEUE_REQUEST:
     case REMOVE_JOB_REQUEST:
     case RERUN_JOB_REQUEST:
-      return {
-        ...state,
-        fetching: type
-      };
     case FETCH_JOB_BY_ID_REQUEST:
       return {
         ...state,
-        fetching: type,
-        currentJob: {}
+        fetching: type
       };
     case REMOVE_JOB_FAILURE:
     case FETCH_JOBS_FAILURE:
@@ -77,6 +74,12 @@ export default (state = {}, action = {}) => {
         ...state,
         selected: payload.selected || 'all'
       };
+    case SET_UPDATE_JOBS:
+      console.log('set_update_jobs', payload);
+      return {
+        ...state,
+        currentUpdater: payload.updater
+      }
     default:
       return state;
   }

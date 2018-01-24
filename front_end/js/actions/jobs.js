@@ -7,7 +7,9 @@ import {
   REMOVE_JOB,
   RERUN_JOB,
   SET_SELECTED_JOBS,
-  LOCK_QUEUE
+  LOCK_QUEUE,
+  SET_UPDATE_BUILDS,
+  SET_UPDATE_JOBS,
 } from './actionTypes';
 
 const POST_PARAMS = {
@@ -72,6 +74,14 @@ export const lockQueue = (locked) => {
   return {
     types: LOCK_QUEUE,
     api: { url: '/jobs/lock', params }
+  }
+}
+
+export const setUpdater = (updater) => {
+  console.log('setUpdater', updater);
+  return {
+    type: SET_UPDATE_JOBS,
+    payload: { updater }
   }
 }
 

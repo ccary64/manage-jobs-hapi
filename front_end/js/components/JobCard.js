@@ -50,7 +50,7 @@ class JobCard extends React.Component {
         <CardActions>
           <Button label={CARD_ACTION_RERUN} onClick={this.handleRerun} raised primary />
           <Button label={CARD_ACTION_REMOVE} onClick={this.handleRemove} raised accent />
-          <Link to={`/${jobId}`}><Button icon='info_outline' label={CARD_ACTION_LOGS} raised /></Link>
+          <Link to={`/job/${jobId}`}><Button icon='info_outline' label={CARD_ACTION_LOGS} raised /></Link>
         </CardActions>
       </Card>
     );

@@ -2,7 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux'
 import Navigation from 'react-toolbox/lib/navigation';
 import FilterButton from './FilterButton';
+import * as jobActions from '../actions/jobs';
 import JobCard from './JobCard';
+
 import * as constants from '../constants';
 
 const { BUTTON_OPTIONS } = constants;
@@ -18,6 +20,13 @@ class CardContainer extends React.Component {
   constructor(props) {
     super(props);
     this.setFilter = this.setFilter.bind(this);
+    clearInterval(this.props.currentUpdater);
+    this.props.dispatch(jobActions.setUpdater(this.getUpdater));
+  }
+
+  get getUpdater() {
+    this.props.dispatch(jobActions.fetchAll());
+    return setInterval(() => this.props.dispatch(jobActions.fetchAll()), 1000);
   }
 
   setFilter() {

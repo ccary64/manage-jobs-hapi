@@ -12,11 +12,22 @@ class JobDetails extends React.Component {
   constructor(props) {
     super(props);
     const { jobId } = this.props.match.params || {};
+    clearInterval(this.props.currentUpdater);
+    this.props.dispatch(jobActions.setUpdater(this.getUpdater));
+  }
+
+  get getUpdater() {
+    const { jobId } = this.props.match.params || {};
     this.props.dispatch(jobActions.fetchById(jobId));
+    return setInterval(() => this.props.dispatch(jobActions.fetchById(jobId)), 1000);
+  }
+
+  sortBuilds(build) {
+    return build.slice().sort((a, b) => a.id > b.id);
   }
 
   render() {
-    const { builds = [], name } = this.props;
+    const { builds = [], name } = this.props.currentJob;
     return (
       <List selectable>
         <ListSubHeader caption={name} />
@@ -35,6 +46,11 @@ class JobDetails extends React.Component {
   }
 }
 
-const mapStateToProps = (state/*, props*/) => state.jobs.currentJob || {};
+const mapStateToProps = (state/*, props*/) => {
+  return {
+    currentJob: state.jobs.currentJob || {},
+    currentUpdater: state.jobs.currentUpdater
+  };
+}
 const ConnectedJobDetails = connect(mapStateToProps)(JobDetails);
 export default ConnectedJobDetails;

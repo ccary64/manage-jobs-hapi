@@ -56,3 +56,5 @@ export const RERUN_JOB = [
 ]
 
 export const SET_SELECTED_JOBS = 'SET_SELECTED_JOBS';
+export const SET_UPDATE_BUILDS = 'SET_UPDATE_BUILDS';
+export const SET_UPDATE_JOBS = 'SET_UPDATE_JOBS';

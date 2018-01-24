@@ -1,12 +1,16 @@
 const path = require('path');
 const webpack = require('webpack');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const cssnext = require("postcss-cssnext");
 
 module.exports = {
   entry: path.resolve(__dirname, '../js/app.js'),
   output: {
     path: path.resolve(__dirname, '../public'),
     filename: 'app.bundle.js'
+  },
+  watch: true,
+  watchOptions: {
+    ignored: [/node_modules/, /api/]
   },
   module: {
     loaders: [{
@@ -35,14 +39,15 @@ module.exports = {
         },{
           loader: "postcss-loader",
           options: {
-            path: path.resolve(__dirname, 'postcss.config.js')
+            plugins() {
+              return [ cssnext ];
+            }
           }
         }
       ]
     }
   ]
   },
-  plugins: [new ExtractTextPlugin("styles.css")],
   stats: {
     colors: true
   },
