@@ -74,7 +74,7 @@ export default (state = {}, action = {}) => {
     case SET_SELECTED_JOBS:
       return {
         ...state,
-        selected: payload.selected || 'all'
+        selected: payload.selected
       };
     case SET_UPDATER:
       return {
