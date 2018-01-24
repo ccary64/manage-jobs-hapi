@@ -48,8 +48,8 @@ class JobCard extends React.Component {
         <CardTitle subtitle="Elapsed Time" />
         <CardText>{moment(currentTime).diff(startTime, 'seconds')}</CardText>
         <CardActions>
-          <Button label={CARD_ACTION_RERUN} onClick={this.handleRerun} raised primary />
-          <Button label={CARD_ACTION_REMOVE} onClick={this.handleRemove} raised accent />
+          <Button label={CARD_ACTION_RERUN} icon='autorenew' onClick={this.handleRerun} raised primary />
+          <Button label={CARD_ACTION_REMOVE} icon='highlight_off' onClick={this.handleRemove} raised accent />
           <Link to={`/job/${jobId}`}><Button icon='info_outline' label={CARD_ACTION_LOGS} raised /></Link>
         </CardActions>
       </Card>

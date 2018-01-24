@@ -33,3 +33,11 @@ export const STATUS_ICONS = {
   [ERROR]: ICON_ERROR,
   [STOPPED]: ICON_ERROR
 };
+
+export const STATUS_BUTTON_ICONS = {
+  [ALL]: '',
+  [COMPLETE]: 'done_all',
+  [RUNNING]: 'cached',
+  [ERROR]: 'error_outline',
+  [STOPPED]: 'done_all'
+};
