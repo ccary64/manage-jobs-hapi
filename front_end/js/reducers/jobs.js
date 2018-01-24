@@ -20,8 +20,7 @@ import {
   LOCK_QUEUE_SUCCESS,
   LOCK_QUEUE_FAILURE,
   SET_SELECTED_JOBS,
-  SET_UPDATE_BUILDS,
-  SET_UPDATE_JOBS
+  SET_UPDATER
 } from '../actions/actionTypes';
 
 export default (state = {}, action = {}) => {
@@ -74,8 +73,7 @@ export default (state = {}, action = {}) => {
         ...state,
         selected: payload.selected || 'all'
       };
-    case SET_UPDATE_JOBS:
-      console.log('set_update_jobs', payload);
+    case SET_UPDATER:
       return {
         ...state,
         currentUpdater: payload.updater

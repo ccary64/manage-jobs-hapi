@@ -8,8 +8,7 @@ import {
   RERUN_JOB,
   SET_SELECTED_JOBS,
   LOCK_QUEUE,
-  SET_UPDATE_BUILDS,
-  SET_UPDATE_JOBS,
+  SET_UPDATER,
 } from './actionTypes';
 
 const POST_PARAMS = {
@@ -78,9 +77,8 @@ export const lockQueue = (locked) => {
 }
 
 export const setUpdater = (updater) => {
-  console.log('setUpdater', updater);
   return {
-    type: SET_UPDATE_JOBS,
+    type: SET_UPDATER,
     payload: { updater }
   }
 }
