@@ -4,7 +4,7 @@ import { CREATE_JOB_REQUEST } from '../actions/actionTypes';
 import * as jobActions from '../actions/jobs';
 import * as constants from '../constants';
 import moment from 'moment';
-import { List, ListItem, ListSubHeader } from 'react-toolbox/lib/list';
+import { List, ListItem, ListSubHeader } from 'react-toolbox';
 
 const { STATUS_ICONS, RUNNING, COMPLETE } = constants;
 
@@ -20,11 +20,6 @@ class JobDetails extends React.Component {
     const { jobId } = this.props.match.params || {};
     this.props.dispatch(jobActions.fetchById(jobId));
     return setInterval(() => this.props.dispatch(jobActions.fetchById(jobId)), 1000);
-  }
-
-  shouldComponentUpdate(nextProps) {
-    console.log(nextProps);
-    return true;
   }
 
   render() {
@@ -48,7 +43,6 @@ class JobDetails extends React.Component {
 }
 
 const mapStateToProps = (state/*, props*/) => {
-  console.log('state', state.jobs.currentBuilds);
   return {
     currentJob: state.jobs.currentJob || {},
     currentBuilds: state.jobs.currentBuilds || [],

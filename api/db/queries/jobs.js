@@ -67,7 +67,7 @@ function batchEndJobs(buildIds, currentTime) {
   return knex('jobs_status')
     .where({status: 'running'})
     .whereIn('id', buildIds)
-    .update({'end_time': currentTime, status: 'complete', 'last_task': 'finnished' });
+    .update({'end_time': currentTime, status: 'complete', 'last_task': 'finished' });
 }
 
 function updateJob(id, job) {

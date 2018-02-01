@@ -1,24 +1,26 @@
 import React from 'react';
 import { connect } from 'react-redux'
-import Navigation from 'react-toolbox/lib/navigation';
+import { Navigation, Snackbar, Autocomplete } from 'react-toolbox';
 import FilterButton from './FilterButton';
 import * as jobActions from '../actions/jobs';
 import JobCard from './JobCard';
 
 import * as constants from '../constants';
 
-const { BUTTON_OPTIONS } = constants;
+const { BUTTON_OPTIONS, ALL } = constants;
 
 const containerStyle = {
   display: 'flex',
   flexWrap: 'wrap',
-  justifyContent: 'space-around',
-  width: '98vw'
+  justifyContent: 'center'
 }
 
 class CardContainer extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      multiple: ['spain', 'ben']
+    }
     this.setFilter = this.setFilter.bind(this);
     clearInterval(this.props.currentUpdater);
     this.props.dispatch(jobActions.setUpdater(this.getUpdater));
@@ -30,9 +32,9 @@ class CardContainer extends React.Component {
   }
 
   setFilter() {
-    const { list = [], selected = 'all' } = this.props;
+    const { list = [], selected = ALL } = this.props;
 
-    if (selected === 'all') {
+    if (selected === ALL) {
       return list;
     }
 
@@ -49,6 +51,11 @@ class CardContainer extends React.Component {
         <div style={containerStyle}>
           {cards.map(job => <JobCard job={job} />)}
         </div>
+        <Snackbar
+          active={this.props.locked || false}
+          label='The Queue is locked'
+          type='cancel'
+        />
       </div>
     );
   }

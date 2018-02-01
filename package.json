@@ -10,13 +10,17 @@
     "seed": "sleep 10s && knex seed:run --env development --knexfile ./api/db/knexfile.js",
     "webpack:server": "webpack-dev-server --hot --inline --config ./front_end/config/webpack.dev.config.js",
     "webpack": "webpack --config ./front_end/config/webpack.dev.config.js",
+    "docker": "sudo docker-compose -f ./docker/docker-compose.yml up",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "nodemonConfig": {
-    "ignore": ["front_end/*", "docs/*"]
+    "ignore": [
+      "front_end/*",
+      "docs/*"
+    ]
   },
   "dependencies": {
     "babel-polyfill": "^6.26.0",
@@ -47,10 +51,10 @@
     "css-loader": "^0.28.7",
     "eslint": "^4.16.0",
     "extract-text-webpack-plugin": "^3.0.2",
+    "nodemon": "^1.14.8",
+    "postcss-loader": "^2.0.10",
     "style-loader": "^0.19.1",
     "webpack": "^3.10.0",
-    "webpack-dev-server": "^2.10.1",
-    "nodemon": "^1.14.8",
-    "postcss-loader": "^2.0.10"
+    "webpack-dev-server": "^2.10.1"
   }
 }

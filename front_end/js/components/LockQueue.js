@@ -1,8 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux'
 import * as jobActions from '../actions/jobs';
-import Dialog from 'react-toolbox/lib/dialog';
-import Button from 'react-toolbox/lib/button';
+import { Button, Dialog } from 'react-toolbox';
 
 class LockQueue extends React.Component {
   constructor(props) {

@@ -12,7 +12,7 @@ export default class TopBar extends React.Component {
 
   render() {
     return (
-      <div style={{width: '99vw'}}>
+      <div>
         <AppBar title='Jobs Admin' >
           <Navigation type="horizontal">
             <CreateJob />

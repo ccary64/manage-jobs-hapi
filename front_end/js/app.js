@@ -9,13 +9,6 @@ import CardContainer from './components/CardContainer';
 import TopBar from './components/TopBar';
 import JobDetails from './components/JobDetails';
 
-const cards = {
-  display: 'flex',
-  flexWrap: 'wrap',
-  justifyContent: 'space-around',
-  width: '98vw'
-}
-
 const store = createStore({ jobs: {}});
 
 render (

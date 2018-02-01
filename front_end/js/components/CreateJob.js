@@ -2,9 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux'
 import * as jobActions from '../actions/jobs';
 import * as constants from '../constants';
-import Dialog from 'react-toolbox/lib/dialog';
-import Button from 'react-toolbox/lib/button';
-import Input from 'react-toolbox/lib/input';
+import { Dialog, Button, Input } from 'react-toolbox';
 
 const { START_JOB, CANCEL_JOB, VALIDATION_ERROR } = constants;
 
